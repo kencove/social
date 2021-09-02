@@ -68,13 +68,12 @@ class MailActivity(models.Model):
             # an automatic scheduled activity
             if (
                 activity.user_id.id != SUPERUSER_ID
-                and activity.team_id and activity.user_id
-                and activity.user_id not in activity.team_id.with_context(
-                    active_test=False
-                ).member_ids
+                and activity.team_id
+                and activity.user_id
+                and activity.user_id
+                not in activity.team_id.with_context(active_test=False).member_ids
             ):
                 raise ValidationError(
-                _("The assigned user %s is not member of the team %s.")
-                % (activity.user_id.name, activity.team_id.name)
-            )
-
+                    _("The assigned user %s is not member of the team %s.")
+                    % (activity.user_id.name, activity.team_id.name)
+                )
