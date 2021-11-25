@@ -13,6 +13,7 @@ setuptools.setup(
         'odoo14-addon-mail_activity_board',
         'odoo14-addon-mail_allow_portal_internal_note',
         'odoo14-addon-mail_attach_existing_attachment',
+        'odoo14-addon-mail_attach_existing_attachment_account',
         'odoo14-addon-mail_autosubscribe',
         'odoo14-addon-mail_debrand',
         'odoo14-addon-mail_full_expand',
@@ -33,6 +34,8 @@ setuptools.setup(
         'odoo14-addon-mass_mailing_partner',
         'odoo14-addon-mass_mailing_resend',
         'odoo14-addon-mass_mailing_subscription_date',
+        'odoo14-addon-mass_mailing_subscription_email',
+        'odoo14-addon-mass_mailing_unique',
     ],
     classifiers=[
         'Programming Language :: Python',

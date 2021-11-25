@@ -24,6 +24,7 @@ addon | version | maintainers | summary
 [mail_activity_board](mail_activity_board/) | 14.0.1.0.0 |  | Add Activity Boards
 [mail_allow_portal_internal_note](mail_allow_portal_internal_note/) | 14.0.1.0.0 |  | Portal users can access internal messages related to own or other companies
 [mail_attach_existing_attachment](mail_attach_existing_attachment/) | 14.0.1.0.0 |  | Adding attachment on the object by sending this one
+[mail_attach_existing_attachment_account](mail_attach_existing_attachment_account/) | 14.0.1.0.0 |  | Module to use attach existing attachment for account module
 [mail_autosubscribe](mail_autosubscribe/) | 14.0.1.0.0 |  | Automatically subscribe partners to its company's business documents
 [mail_debrand](mail_debrand/) | 14.0.2.0.2 | [![pedrobaeza](https://github.com/pedrobaeza.png?size=30px)](https://github.com/pedrobaeza) [![joao-p-marques](https://github.com/joao-p-marques.png?size=30px)](https://github.com/joao-p-marques) | Remove Odoo branding in sent emails Removes anchor <a href odoo.com togheder with it's parent ( for powerd by) form all the templates removes any 'odoo' that are in tempalte texts > 20characters
 [mail_full_expand](mail_full_expand/) | 14.0.1.0.0 |  | Expand mail in a big window
@@ -34,7 +35,7 @@ addon | version | maintainers | summary
 [mail_preview_base](mail_preview_base/) | 14.0.1.0.0 |  | Base to add more previewing options
 [mail_restrict_send_button](mail_restrict_send_button/) | 14.0.1.1.0 |  | Security for Send Message Button on Chatter Area
 [mail_send_copy](mail_send_copy/) | 14.0.1.0.1 |  | Send to you a copy of each mail sent by Odoo
-[mail_tracking](mail_tracking/) | 14.0.1.1.1 |  | Email tracking system for all mails sent
+[mail_tracking](mail_tracking/) | 14.0.2.0.0 |  | Email tracking system for all mails sent
 [mail_tracking_mailgun](mail_tracking_mailgun/) | 14.0.1.0.0 |  | Mail tracking and Mailgun webhooks integration
 [mail_tracking_mass_mailing](mail_tracking_mass_mailing/) | 14.0.1.0.0 |  | Improve mass mailing email tracking
 [mass_mailing_contact_partner](mass_mailing_contact_partner/) | 14.0.1.0.0 | [![ivantodorovich](https://github.com/ivantodorovich.png?size=30px)](https://github.com/ivantodorovich) | Links mailing.contacts with res.partners.
@@ -44,6 +45,8 @@ addon | version | maintainers | summary
 [mass_mailing_partner](mass_mailing_partner/) | 14.0.1.0.1 |  | Link partners with mass-mailing
 [mass_mailing_resend](mass_mailing_resend/) | 14.0.1.0.0 | [![pedrobaeza](https://github.com/pedrobaeza.png?size=30px)](https://github.com/pedrobaeza) | Resend mass mailings
 [mass_mailing_subscription_date](mass_mailing_subscription_date/) | 14.0.1.0.0 | [![ivantodorovich](https://github.com/ivantodorovich.png?size=30px)](https://github.com/ivantodorovich) | Track contact's subscription date to mailing lists
+[mass_mailing_subscription_email](mass_mailing_subscription_email/) | 14.0.1.0.0 | [![ivantodorovich](https://github.com/ivantodorovich.png?size=30px)](https://github.com/ivantodorovich) | Send notification emails when contacts subscription changes.
+[mass_mailing_unique](mass_mailing_unique/) | 14.0.1.0.0 |  | Avoids duplicate mailing lists and contacts
 
 [//]: # (end addons)
 
