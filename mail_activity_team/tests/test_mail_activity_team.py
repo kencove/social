@@ -139,15 +139,6 @@ class TestMailActivityTeam(TransactionCase):
         self.assertEqual(self.team1.count_missing_activities, 0)
         self.assertEqual(self.act1.team_id, self.team1)
 
-    def test_team_onchanges(self):
-        self.assertFalse(
-            self.team2.user_id, "Error: Team 2 should not have a Team Leader yet."
-        )
-        self.team2.user_id = self.employee
-        self.team2.member_ids = [(3, self.employee.id)]
-        self.team2._onchange_member_ids()
-        self.assertFalse(self.team2.user_id)
-
     def test_leader_onchange(self):
         self.team2.user_id = self.employee3
         self.team2._onchange_user_id()
