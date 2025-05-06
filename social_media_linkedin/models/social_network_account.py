@@ -131,8 +131,12 @@ class SocialNetworkAccount(models.Model):
             headers={"Content-Type": "application/x-www-form-urlencoded"},
             token=True,
         )
-        if response and response.get("active", False):
-            return True
+        if response:
+            try:
+                result = response.json()
+            except ValueError:
+                return False
+            return result.get("active", False)
         return False
 
     def _prepare_url_upload_asset(self, feedshare="image"):
@@ -310,7 +314,7 @@ class SocialNetworkAccount(models.Model):
         )
         organization_ids = [
             organization["organization"].split(":")[-1]
-            for organization in response.get("elements", [])
+            for organization in response.json().get("elements", [])
         ]
         response_organizations = self._get_restli_client().batch_get(
             resource_path="/organizations",
