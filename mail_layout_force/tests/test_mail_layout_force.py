@@ -2,7 +2,14 @@
 # @author Iván Todorovich <ivan.todorovich@camptocamp.com>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
+import re
+
+from odoo import Command
 from odoo.tests import TransactionCase
+
+
+def normalize_html(html):
+    return re.sub(r"\s+", "", html)
 
 
 class TestMailLayoutForce(TransactionCase):
@@ -16,6 +23,20 @@ class TestMailLayoutForce(TransactionCase):
                 "type": "qweb",
                 "mode": "primary",
                 "arch": "<t t-name='test'><h1></h1><t t-out='message.body'/></t>",
+            }
+        )
+        cls.mail_notification_layout = cls.env.ref("mail.mail_notification_layout")
+        cls.layout_substitute = cls.env["ir.ui.view"].create(
+            {
+                "name": "Substitute Layout",
+                "type": "qweb",
+                "mode": "primary",
+                "arch": """<?xml version="1.0"?>
+                    <t t-name="custom_mail_notification_layout">
+                    <div t-out="message.body"/>
+                    <div t-if="signature" t-out="signature" style="font-size: 13px;"/>
+                    <h1>Substituted</h1>
+                </t>""",
             }
         )
         cls.template = cls.env["mail.template"].create(
@@ -39,7 +60,9 @@ class TestMailLayoutForce(TransactionCase):
             email_layout_xmlid="mail.mail_notification_light",
         )
         message = self.partner.message_ids[-1]
-        self.assertEqual(message.mail_ids.body_html.strip(), "<p>Test</p>")
+        self.assertEqual(
+            normalize_html(message.mail_ids.body_html.strip()), "<p>Test</p>"
+        )
 
     def test_custom_layout(self):
         self.template.force_email_layout_id = self.layout_test
@@ -49,7 +72,9 @@ class TestMailLayoutForce(TransactionCase):
             email_layout_xmlid="mail.mail_notification_light",
         )
         message = self.partner.message_ids[-1]
-        self.assertEqual(message.mail_ids.body_html.strip(), "<h1></h1><p>Test</p>")
+        self.assertEqual(
+            normalize_html(message.mail_ids.body_html.strip()), "<h1></h1><p>Test</p>"
+        )
 
     def test_custom_layout_composer(self):
         self.template.force_email_layout_id = self.layout_test
@@ -70,4 +95,35 @@ class TestMailLayoutForce(TransactionCase):
         composer._onchange_template_id_wrapper()
         composer._action_send_mail()
         message = self.partner.message_ids[-1]
-        self.assertEqual(message.mail_ids.body_html.strip(), "<h1></h1><p>Test</p>")
+        self.assertEqual(
+            normalize_html(message.mail_ids.body_html.strip()), "<h1></h1><p>Test</p>"
+        )
+
+    def test_chatter_message_uses_default_layout(self):
+        self.partner.message_post(
+            body="Test Message",
+            email_layout_xmlid=self.mail_notification_layout.xml_id,
+            message_type="comment",
+            subtype_xmlid="mail.mt_comment",
+            mail_auto_delete=False,
+            force_send=True,
+        )
+        message = self.partner.message_ids[-1]
+        self.assertNotIn("<h1>Substituted</h1>", message.mail_ids.body_html)
+        self.assertIn("Test Message", message.mail_ids.body_html)
+
+    def test_chatter_message_uses_substituted_layout(self):
+        self.mail_notification_layout.layout_mapping_line_ids = [
+            Command.create({"substitute_layout_id": self.layout_substitute.id})
+        ]
+        self.partner.message_post(
+            body="Test Message",
+            email_layout_xmlid=self.mail_notification_layout.xml_id,
+            message_type="comment",
+            subtype_xmlid="mail.mt_comment",
+            mail_auto_delete=False,
+            force_send=True,
+        )
+        message = self.partner.message_ids[-1]
+        self.assertIn("<h1>Substituted</h1>", message.mail_ids.body_html)
+        self.assertIn("Test Message", message.mail_ids.body_html)
